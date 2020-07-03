@@ -17,11 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     elementary.cpp \
+    figure.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     elementary.h \
+    figure.h \
     mainwindow.h
 
 FORMS += \

@@ -12,7 +12,6 @@ signals:
     void onElementClicked();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    QColor colour;
 };
 
 #endif // ELEMENTARY_H
