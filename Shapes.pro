@@ -18,12 +18,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     elementary.cpp \
     figure.cpp \
+    line.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     elementary.h \
     figure.h \
+    line.h \
     mainwindow.h
 
 FORMS += \
