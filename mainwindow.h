@@ -4,6 +4,13 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QPushButton>
+#include <QTimer>
+#include <QDebug>
+#include <QPainter>
+#include <QMessageBox>
+
+#include <circle.h>
+#include <elementary.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

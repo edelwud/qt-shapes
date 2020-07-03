@@ -1,11 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QTimer>
-#include <QDebug>
-#include <QPainter>
-#include <elementary.h>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -25,8 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
     ui->graphicsView->setScene(scene);
 
-    Elementary* element = new Elementary;
-    element->setRect(20, 20, 60, 60);
+    Elementary* element = new Circle(200);
     scene->addItem(element);
 }
 

@@ -3,12 +3,12 @@
 
 #include <elementary.h>
 
-class Figure : Elementary
+class Figure : public Elementary
 {
 public:
     Figure();
 protected:
-    QColor colour;
+    QColor colour = Qt::black;
 };
 
 #endif // FIGURE_H

@@ -6,6 +6,6 @@ Elementary::Elementary()
 }
 
 void Elementary::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    emit onElementClicked();
+    chosen = !chosen;
     QGraphicsItem::mousePressEvent(event);
 }

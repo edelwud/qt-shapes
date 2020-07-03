@@ -8,10 +8,9 @@ class Elementary : public QObject, public QGraphicsItem
 {
 public:
     Elementary();
-signals:
-    void onElementClicked();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    bool chosen = false;
 };
 
 #endif // ELEMENTARY_H
