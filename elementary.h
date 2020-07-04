@@ -8,6 +8,7 @@ class Elementary : public QObject, public QGraphicsItem
 {
 public:
     Elementary();
+    bool isChosen() const;
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     bool chosen = false;

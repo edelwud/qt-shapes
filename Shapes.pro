@@ -19,6 +19,7 @@ SOURCES += \
     circle.cpp \
     elementary.cpp \
     figure.cpp \
+    graphicsview.cpp \
     line.cpp \
     main.cpp \
     mainwindow.cpp
@@ -27,6 +28,7 @@ HEADERS += \
     circle.h \
     elementary.h \
     figure.h \
+    graphicsview.h \
     line.h \
     mainwindow.h
 

@@ -3,10 +3,17 @@
 
 #include <elementary.h>
 
+enum class ElementaryFigures {
+    Circle,
+    Square,
+    Triangle
+};
+
 class Figure : public Elementary
 {
 public:
-    Figure();
+    Figure(QColor colour) : colour(colour) {};
+    static Figure* createFigure(ElementaryFigures type);
 protected:
     QColor colour = Qt::black;
 };

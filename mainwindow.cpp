@@ -19,9 +19,11 @@ MainWindow::MainWindow(QWidget *parent)
         ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
     });
     ui->graphicsView->setScene(scene);
-
-    Elementary* element = new Circle(200);
-    scene->addItem(element);
+    ui->graphicsView->AddMousePressHandler([this](QMouseEvent* event){
+        Figure* element = new Circle(100, Qt::black);
+        element->setPos(event->pos());
+        scene->addItem(element);
+    });
 }
 
 void MainWindow::resizeEvent(QResizeEvent*) {

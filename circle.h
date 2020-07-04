@@ -7,9 +7,9 @@
 class Circle : public Figure
 {
 public:
-    Circle(qreal radius) : circleRadius(radius) {};
-private:
+    Circle(qreal radius, QColor colour);
     QRectF boundingRect() const override;
+private:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
     qreal circleRadius;

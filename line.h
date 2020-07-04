@@ -9,6 +9,7 @@ public:
     Line();
 private:
     QColor colour;
+    bool dotted = false;
 };
 
 #endif // LINE_H

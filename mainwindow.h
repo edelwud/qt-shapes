@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QPainter>
 #include <QMessageBox>
+#include <QMouseEvent>
 
 #include <circle.h>
 #include <elementary.h>
