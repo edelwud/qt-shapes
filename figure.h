@@ -12,7 +12,8 @@ enum class ElementaryFigures {
 class Figure : public Elementary
 {
 public:
-    Figure(QColor colour) : colour(colour) {};
+    void setColour(QColor color);
+    virtual void setSize(QPoint difference) = 0;
     static Figure* createFigure(ElementaryFigures type);
 protected:
     QColor colour = Qt::black;

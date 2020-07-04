@@ -22,7 +22,8 @@ SOURCES += \
     graphicsview.cpp \
     line.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    triangle.cpp
 
 HEADERS += \
     circle.h \
@@ -30,7 +31,8 @@ HEADERS += \
     figure.h \
     graphicsview.h \
     line.h \
-    mainwindow.h
+    mainwindow.h \
+    triangle.h
 
 FORMS += \
     mainwindow.ui

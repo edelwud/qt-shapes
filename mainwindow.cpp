@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <triangle.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,11 +20,25 @@ MainWindow::MainWindow(QWidget *parent)
         ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
     });
     ui->graphicsView->setScene(scene);
-    ui->graphicsView->AddMousePressHandler([this](QMouseEvent* event){
-        Figure* element = new Circle(100, Qt::black);
-        element->setPos(event->pos());
-        scene->addItem(element);
+
+    Figure* tempFigure;
+    QPoint startPosition;
+    int handlerIdentifier;
+
+    ui->graphicsView->AddMousePressHandler([this, &tempFigure, &startPosition, &handlerIdentifier](QMouseEvent* event){
+        tempFigure = new Triangle(0, 0);
+        startPosition = event->pos();
+        tempFigure->setPos(startPosition);
+        scene->addItem(tempFigure);
+        handlerIdentifier = ui->graphicsView->AddMouseMoveHandler([&](QMouseEvent* event){
+            tempFigure->setSize(event->pos() - startPosition);
+        });
     });
+
+    ui->graphicsView->AddMouseReleaseHandler([this, &handlerIdentifier](QMouseEvent*){
+        ui->graphicsView->RemoveMouseMoveHandler(handlerIdentifier);
+    });
+
 }
 
 void MainWindow::resizeEvent(QResizeEvent*) {

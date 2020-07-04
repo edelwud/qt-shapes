@@ -1,6 +1,6 @@
 #include "circle.h"
 
-Circle::Circle(qreal radius, QColor colour) : Figure(colour), circleRadius(radius) {}
+Circle::Circle(qreal radius) : circleRadius(radius) {}
 
 QRectF Circle::boundingRect() const {
     return QRectF(0, 0, circleRadius, circleRadius);

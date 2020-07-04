@@ -43,6 +43,17 @@ void GraphicsView::mouseReleaseEvent(QMouseEvent *event) {
     QGraphicsView::mouseReleaseEvent(event);
 }
 
+void GraphicsView::mouseMoveEvent(QMouseEvent *event) {
+    if (IsSubset()) {
+        QGraphicsView::mouseReleaseEvent(event);
+        return;
+    }
+    for (std::function<void(QMouseEvent*)> callback : mouseMoveHandlers) {
+        callback(event);
+    }
+    QGraphicsView::mouseMoveEvent(event);
+}
+
 int GraphicsView::AddMousePressHandler(std::function<void(QMouseEvent*)> callback) {
     mousePressHandlers.append(callback);
     return mousePressHandlers.size() - 1;
@@ -52,3 +63,13 @@ int GraphicsView::AddMouseReleaseHandler(std::function<void(QMouseEvent*)> callb
     mouseReleaseHandlers.append(callback);
     return mouseReleaseHandlers.size() - 1;
 }
+
+int GraphicsView::AddMouseMoveHandler(std::function<void(QMouseEvent*)> callback) {
+    mouseMoveHandlers.append(callback);
+    return mouseMoveHandlers.size() - 1;
+}
+
+void GraphicsView::RemoveMouseMoveHandler(int identifier) {
+    mouseMoveHandlers.remove(identifier);
+}
+
