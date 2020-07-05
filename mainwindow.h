@@ -17,6 +17,15 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+enum Instruments {
+    CircleDrawer = 0,
+    TriangleDrawer,
+    RectangleDrawer,
+    LineDrawer,
+    HandManipulator,
+    ColourPicker
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -28,8 +37,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_circleButton_pressed();
+
 private:
-    ElementaryFigures instrument = ElementaryFigures::Circle;
+    std::map<QAbstractButton*, Instruments> instrumentButtons;
+    Instruments instrument;
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
 };

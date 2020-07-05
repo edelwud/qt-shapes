@@ -23,6 +23,7 @@ SOURCES += \
     line.cpp \
     main.cpp \
     mainwindow.cpp \
+    rectangle.cpp \
     triangle.cpp
 
 HEADERS += \
@@ -32,6 +33,7 @@ HEADERS += \
     graphicsview.h \
     line.h \
     mainwindow.h \
+    rectangle.h \
     triangle.h
 
 FORMS += \

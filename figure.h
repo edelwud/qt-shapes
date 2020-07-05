@@ -5,7 +5,7 @@
 
 enum class ElementaryFigures {
     Circle,
-    Square,
+    Rectangle,
     Triangle
 };
 

@@ -26,7 +26,6 @@ void Triangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 
 void Triangle::setSize(QPoint difference) {
-    base = difference.x();
+    base = difference.x() - 5;
     aside = difference.y();
-    update();
 }

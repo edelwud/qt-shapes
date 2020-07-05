@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <triangle.h>
+#include <QButtonGroup>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +11,26 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
 
+    instrumentButtons = {
+        { ui->circleButton, Instruments::CircleDrawer },
+        { ui->triangleButton, Instruments::TriangleDrawer },
+        { ui->squareButton, Instruments::RectangleDrawer },
+        { ui->lineButton, Instruments::LineDrawer },
+        { ui->handButton, Instruments::HandManipulator },
+        { ui->colourButton, Instruments::ColourPicker }
+    };
+
+
+    QButtonGroup* group = new QButtonGroup(this);
+    for (auto [button, instrument] : instrumentButtons) {
+        group->addButton(button);
+    }
+
+    connect(group, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonPressed), [this](QAbstractButton *button){
+        this->instrument = instrumentButtons[button];
+    });
+
+    setInstrument(Instruments::CircleDrawer);
     setIconsInitialized();
 
     scene = new QGraphicsScene(this);
@@ -23,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     int handlerIdentifier;
     ui->graphicsView->AddMousePressHandler([this, &handlerIdentifier](QMouseEvent* event){
-        Figure* figure = Figure::createFigure(instrument);
+        Figure* figure = Figure::createFigure((ElementaryFigures)instrument);
         QPoint startPosition = event->pos();
         figure->setPos(startPosition);
         scene->addItem(figure);
@@ -68,3 +89,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::on_circleButton_pressed()
+{
+    setInstrument(Instruments::CircleDrawer);
+}
