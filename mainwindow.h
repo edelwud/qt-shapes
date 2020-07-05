@@ -19,17 +19,17 @@ QT_END_NAMESPACE
 
 enum Instruments {
     CircleDrawer = 0,
-    TriangleDrawer,
     RectangleDrawer,
+    TriangleDrawer,
     LineDrawer,
-    HandManipulator,
-    ColourPicker
+    HandManipulator
 };
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 private:
+    void handleSelectedFigure(Figure* selected);
     void setIconsInitialized();
     void setButtonIcon(QPushButton* button, QString resource);
     void resizeEvent(QResizeEvent* resizeEvent) override;
@@ -38,12 +38,18 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_circleButton_pressed();
+    void on_colourButton_pressed();
 
 private:
+    std::vector<Figure*> selectedFigures;
+
+    QGraphicsItemGroup* figuresGroup;
+    QGraphicsItemGroup* linesGroup;
+
     std::map<QAbstractButton*, Instruments> instrumentButtons;
-    Instruments instrument;
+    Instruments instrument = Instruments::CircleDrawer;
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+    QColor baseColour = Qt::black;
 };
 #endif // MAINWINDOW_H

@@ -2,6 +2,10 @@
 
 Circle::Circle(qreal radius) : circleRadius(radius) {}
 
+QPointF Circle::getCore() {
+    return QPointF(x() - circleRadius/2, y() - circleRadius/2);
+}
+
 QRectF Circle::boundingRect() const {
     return QRectF(-circleRadius, -circleRadius, circleRadius, circleRadius);
 }

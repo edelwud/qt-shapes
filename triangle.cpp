@@ -5,6 +5,11 @@ Triangle::Triangle(qreal side, qreal base) : side(side), base(base)
     aside = std::sqrt(std::pow(side, 2) - std::pow(base, 2) / 4);
 }
 
+QPointF Triangle::getCore() {
+    const qreal r = std::pow(side, 2) / std::sqrt(std::pow(2 * side, 2) - std::pow(base, 2));
+    return QPointF(x() + base/2, y() + r);
+}
+
 QRectF Triangle::boundingRect() const {
     return QRectF(0, 0, base, aside);
 }
@@ -28,4 +33,5 @@ void Triangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 void Triangle::setSize(QPoint difference) {
     base = difference.x() - 5;
     aside = difference.y();
+    side = std::sqrt(std::pow(base, 2) + std::pow(aside, 2));
 }

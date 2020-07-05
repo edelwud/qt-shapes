@@ -12,9 +12,10 @@ enum class ElementaryFigures {
 class Figure : public Elementary
 {
 public:
+    virtual QPointF getCore() = 0;
     void setColour(QColor color);
     virtual void setSize(QPoint difference) = 0;
-    static Figure* createFigure(ElementaryFigures type);
+    static Figure* createFigure(ElementaryFigures type, QColor baseColour);
 protected:
     QColor colour = Qt::black;
 };

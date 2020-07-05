@@ -7,7 +7,7 @@ void Figure::setColour(QColor color) {
     colour = color;
 }
 
-Figure* Figure::createFigure(ElementaryFigures type) {
+Figure* Figure::createFigure(ElementaryFigures type, QColor baseColour) {
     Figure* p;
     switch (type)
     {
@@ -26,5 +26,6 @@ Figure* Figure::createFigure(ElementaryFigures type) {
         default:
             assert(false);
     }
+    p->setColour(baseColour);
     return p;
 }

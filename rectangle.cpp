@@ -5,6 +5,10 @@ Rectangle::Rectangle(qreal a, qreal b) : a(a), b(b)
 
 }
 
+QPointF Rectangle::getCore() {
+    return QPointF(x() + a/2, y() + b/2);
+}
+
 QRectF Rectangle::boundingRect() const {
     return QRectF(0, 0, a, b);
 }

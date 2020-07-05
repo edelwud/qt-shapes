@@ -8,6 +8,8 @@ class Rectangle : public Figure
 {
 public:
     Rectangle(qreal a, qreal b);
+
+    QPointF getCore() override;
     void setSize(QPoint difference) override;
     QRectF boundingRect() const override;
 private:

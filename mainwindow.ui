@@ -73,17 +73,28 @@
        </spacer>
       </item>
       <item row="0" column="4">
-       <widget class="QPushButton" name="lineButton">
-        <property name="text">
-         <string>Line</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="lineButton">
+          <property name="text">
+           <string>Line</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="strippedBox">
+          <property name="text">
+           <string>stripped</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item row="0" column="5">
        <widget class="QPushButton" name="handButton">

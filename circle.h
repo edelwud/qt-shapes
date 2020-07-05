@@ -10,6 +10,7 @@ class Circle : public Figure
 public:
     Circle(qreal radius);
 
+    QPointF getCore() override;
     void setSize(QPoint difference) override;
     QRectF boundingRect() const override;
 private:
