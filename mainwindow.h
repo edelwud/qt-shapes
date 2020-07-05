@@ -29,7 +29,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 private:
-    void handleSelectedFigure(Figure* selected);
+    void handleSelectedFigure();
     void setIconsInitialized();
     void setButtonIcon(QPushButton* button, QString resource);
     void resizeEvent(QResizeEvent* resizeEvent) override;
@@ -39,6 +39,10 @@ public:
 
 private slots:
     void on_colourButton_pressed();
+
+    void on_strippedBox_stateChanged(int arg1);
+
+    void on_lineButton_pressed();
 
 private:
     std::vector<Figure*> selectedFigures;
@@ -50,6 +54,8 @@ private:
     Instruments instrument = Instruments::CircleDrawer;
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QColor baseColour = Qt::black;
+
+    bool dottedLine = false;
+    QColor baseColour = Qt::white;
 };
 #endif // MAINWINDOW_H

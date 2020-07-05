@@ -69,6 +69,21 @@ void GraphicsView::RemoveMouseMoveHandler(int identifier) {
     if (mouseMoveHandlers.size() <= identifier) {
         return;
     }
+    //mouseMoveHandlers.erase(mouseMoveHandlers.begin(), mouseMoveHandlers.end());
     mouseMoveHandlers.remove(identifier);
+}
+
+void GraphicsView::RemoveMousePressHandler(int identifier) {
+    if (mousePressHandlers.size() <= identifier) {
+        return;
+    }
+    mousePressHandlers.remove(identifier);
+}
+
+void GraphicsView::RemoveMouseReleaseHandler(int identifier) {
+    if (mouseReleaseHandlers.size() <= identifier) {
+        return;
+    }
+    mouseReleaseHandlers.remove(identifier);
 }
 

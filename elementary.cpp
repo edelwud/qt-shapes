@@ -19,7 +19,8 @@ void Elementary::setPressHandler(std::function<bool (QGraphicsSceneMouseEvent *,
 }
 
 void Elementary::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    chosen = handler(event, chosen);
+    chosen = !chosen;
+    handler(event, chosen);
     QGraphicsItem::mousePressEvent(event);
     update();
 }

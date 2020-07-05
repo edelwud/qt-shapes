@@ -13,7 +13,7 @@ public:
     void setChosen(bool chosen);
     bool isChosen() const;
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     bool chosen = false;
 private:
     std::function<bool(QGraphicsSceneMouseEvent*, bool)> handler = [](QGraphicsSceneMouseEvent*, bool){ return false; };

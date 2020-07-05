@@ -2,9 +2,11 @@
 #include <circle.h>
 #include <triangle.h>
 #include <rectangle.h>
+#include <exception>
 
 void Figure::setColour(QColor color) {
     colour = color;
+    update();
 }
 
 Figure* Figure::createFigure(ElementaryFigures type, QColor baseColour) {
@@ -24,7 +26,7 @@ Figure* Figure::createFigure(ElementaryFigures type, QColor baseColour) {
         }
         break;
         default:
-            assert(false);
+            throw new std::exception();
     }
     p->setColour(baseColour);
     return p;

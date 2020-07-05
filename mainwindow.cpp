@@ -5,6 +5,7 @@
 #include <QColorDialog>
 #include <line.h>
 #include <QGraphicsItemGroup>
+#include <QGraphicsSceneMouseEvent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -27,23 +28,80 @@ MainWindow::MainWindow(QWidget *parent)
         group->addButton(button);
     }
 
-    connect(group, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonPressed), [this](QAbstractButton *button){
+    int handManipulatorPressId = -1;
+    int handManipulatorMoveId = -1;
+    connect(group, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonPressed), [this, handManipulatorPressId, handManipulatorMoveId](QAbstractButton *button) mutable {
         instrument = instrumentButtons[button];
-        if (instrument == Instruments::LineDrawer) {
+        switch (instrument) {
+        case Instruments::LineDrawer: {
+            if (handManipulatorPressId != -1) {
+                ui->graphicsView->RemoveMousePressHandler(handManipulatorPressId);
+                handManipulatorPressId = -1;
+            }
+
+            if (handManipulatorMoveId != -1) {
+                ui->graphicsView->RemoveMouseReleaseHandler(handManipulatorMoveId);
+                handManipulatorMoveId = -1;
+            }
+
             for (auto item : figuresGroup->childItems()) {
                 Figure* element = dynamic_cast<Figure*>(item);
-                element->setPressHandler([&](QGraphicsSceneMouseEvent*, bool chosen) -> bool {
-                    handleSelectedFigure(element);
-                    return !chosen;
+                element->setPressHandler([&](QGraphicsSceneMouseEvent*, bool) -> bool {
+                    handleSelectedFigure();
+                    return true;
                 });
             }
-        } else {
+        }
+        break;
+        case Instruments::HandManipulator: {
             for (auto item : figuresGroup->childItems()) {
                 Figure* element = dynamic_cast<Figure*>(item);
                 element->setPressHandler([&](QGraphicsSceneMouseEvent*, bool) -> bool {
                     return false;
                 });
             }
+
+            handManipulatorPressId = ui->graphicsView->AddMousePressHandler([this](QMouseEvent* position) mutable {
+                int x = position->pos().x();
+                int y = position->pos().y();
+                scene->update();
+
+                int handManipulatorMoveId = ui->graphicsView->AddMouseMoveHandler([this, x, y](QMouseEvent* event) mutable {
+                    for (auto item : figuresGroup->childItems()) {
+                        Figure* element = dynamic_cast<Figure*>(item);
+                        if (element->isChosen()) {
+                            element->setPos(element->pos() + (event->pos() - QPoint(x, y))/100);
+                        }
+                    }
+                    x = event->pos().x();
+                    y = event->pos().y();
+                    scene->update();
+                });
+
+                ui->graphicsView->AddMouseReleaseHandler([this, handManipulatorMoveId](QMouseEvent*){
+                    ui->graphicsView->RemoveMouseMoveHandler(handManipulatorMoveId);
+                });
+            });
+        }
+        break;
+        default: {
+            qDebug() << handManipulatorPressId;
+            if (handManipulatorPressId != -1) {
+                ui->graphicsView->RemoveMousePressHandler(handManipulatorPressId);
+                handManipulatorPressId = -1;
+            }
+
+            if (handManipulatorMoveId != -1) {
+                ui->graphicsView->RemoveMouseReleaseHandler(handManipulatorMoveId);
+                handManipulatorMoveId = -1;
+            }
+            for (auto item : figuresGroup->childItems()) {
+                Figure* element = dynamic_cast<Figure*>(item);
+                element->setPressHandler([&](QGraphicsSceneMouseEvent*, bool) -> bool {
+                    return false;
+                });
+            }
+        }
         }
     });
     setIconsInitialized();
@@ -66,22 +124,23 @@ MainWindow::MainWindow(QWidget *parent)
     });
     ui->graphicsView->setScene(scene);
 
-    Figure* figure;
     int handlerIdentifier;
-    ui->graphicsView->AddMousePressHandler([this, &figure, &handlerIdentifier](QMouseEvent* event) {
-        figure = Figure::createFigure((ElementaryFigures)instrument, baseColour);
-        QPoint startPosition = event->pos();
-        figure->setPos(startPosition);
-
-        figuresGroup->addToGroup(figure);
-        handlerIdentifier = ui->graphicsView->AddMouseMoveHandler([=](QMouseEvent* event){
-            figure->setSize(event->pos() - startPosition);
+    ui->graphicsView->AddMousePressHandler([this, &handlerIdentifier](QMouseEvent* event) {
+        try {
+            Figure* figure = Figure::createFigure((ElementaryFigures)instrument, baseColour);
+            QPoint startPosition = event->pos();
+            figure->setPos(startPosition);
             scene->update();
-        });
+
+            figuresGroup->addToGroup(figure);
+            handlerIdentifier = ui->graphicsView->AddMouseMoveHandler([=](QMouseEvent* event){
+                figure->setSize(event->pos() - startPosition);
+                scene->update();
+            });
+        } catch(...) {}
     });
 
-    ui->graphicsView->AddMouseReleaseHandler([this, &figure, &handlerIdentifier](QMouseEvent*){
-        figure->setChosen(false);
+    ui->graphicsView->AddMouseReleaseHandler([this, &handlerIdentifier](QMouseEvent*){
         ui->graphicsView->RemoveMouseMoveHandler(handlerIdentifier);
     });
 
@@ -94,15 +153,16 @@ void MainWindow::resizeEvent(QResizeEvent*) {
     });
 }
 
-void MainWindow::handleSelectedFigure(Figure *selected) {
+void MainWindow::handleSelectedFigure() {
     for (auto item : figuresGroup->childItems()) {
         Figure* element = dynamic_cast<Figure*>(item);
-        if (!element->isChosen()) {
+        if (element->isChosen()) {
             selectedFigures.push_back(element);
         }
     }
     if (selectedFigures.size() == 2) {
         Line* line = new Line(selectedFigures[0], selectedFigures[1]);
+        line->setDotted(dottedLine);
         linesGroup->addToGroup(line);
     }
     selectedFigures.erase(selectedFigures.begin(), selectedFigures.end());
@@ -132,5 +192,27 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_colourButton_pressed()
 {
-    baseColour = QColorDialog::getColor();
+    QColor colour = QColorDialog::getColor(Qt::white, this);
+    for (auto item : figuresGroup->childItems()) {
+        Figure* element = dynamic_cast<Figure*>(item);
+        if (element->isChosen()) {
+            element->setColour(colour);
+        }
+    }
+    for (auto item : linesGroup->childItems()) {
+        Line* element = dynamic_cast<Line*>(item);
+        if (element->isChosen()) {
+            element->setColour(colour);
+        }
+    }
+}
+
+void MainWindow::on_strippedBox_stateChanged(int status)
+{
+    dottedLine = status ? true : false;
+}
+
+void MainWindow::on_lineButton_pressed()
+{
+    handleSelectedFigure();
 }
