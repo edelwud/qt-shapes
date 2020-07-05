@@ -20,6 +20,8 @@ void Triangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     }
     painter->setBrush(colour);
     painter->drawPolygon(points, 3);
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
 }
 
 

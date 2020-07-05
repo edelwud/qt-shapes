@@ -3,7 +3,7 @@
 Circle::Circle(qreal radius) : circleRadius(radius) {}
 
 QRectF Circle::boundingRect() const {
-    return QRectF(0, 0, circleRadius, circleRadius);
+    return QRectF(-circleRadius, -circleRadius, circleRadius, circleRadius);
 }
 
 void Circle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -11,7 +11,12 @@ void Circle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
         painter->setPen(QPen(Qt::red, 5));
     }
     painter->setBrush(colour);
-    painter->drawEllipse(QRectF(0, 0, circleRadius, circleRadius));
+    painter->drawEllipse(QRectF(-circleRadius, -circleRadius, circleRadius, circleRadius));
     Q_UNUSED(option);
     Q_UNUSED(widget);
+}
+
+void Circle::setSize(QPoint difference) {
+    circleRadius = std::sqrt(std::pow(difference.x(), 2) + std::pow(difference.y(), 2));
+    update();
 }

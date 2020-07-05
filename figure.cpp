@@ -10,6 +10,10 @@ Figure* Figure::createFigure(ElementaryFigures type) {
     Figure* p;
     switch (type)
     {
+        case ElementaryFigures::Circle: {
+            p = new Circle(0);
+        }
+        break;
         default:
             assert(false);
     }

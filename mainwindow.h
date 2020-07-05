@@ -29,6 +29,7 @@ public:
     ~MainWindow();
 
 private:
+    ElementaryFigures instrument = ElementaryFigures::Circle;
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
 };

@@ -21,17 +21,15 @@ MainWindow::MainWindow(QWidget *parent)
     });
     ui->graphicsView->setScene(scene);
 
-    Figure* tempFigure;
-    QPoint startPosition;
     int handlerIdentifier;
-
-    ui->graphicsView->AddMousePressHandler([this, &tempFigure, &startPosition, &handlerIdentifier](QMouseEvent* event){
-        tempFigure = new Triangle(0, 0);
-        startPosition = event->pos();
-        tempFigure->setPos(startPosition);
-        scene->addItem(tempFigure);
-        handlerIdentifier = ui->graphicsView->AddMouseMoveHandler([&](QMouseEvent* event){
-            tempFigure->setSize(event->pos() - startPosition);
+    ui->graphicsView->AddMousePressHandler([this, &handlerIdentifier](QMouseEvent* event){
+        Figure* figure = Figure::createFigure(instrument);
+        QPoint startPosition = event->pos();
+        figure->setPos(startPosition);
+        scene->addItem(figure);
+        handlerIdentifier = ui->graphicsView->AddMouseMoveHandler([=](QMouseEvent* event){
+            figure->setSize(event->pos() - startPosition);
+            scene->update();
         });
     });
 
