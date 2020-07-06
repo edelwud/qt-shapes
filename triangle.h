@@ -1,9 +1,11 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
-#include <QPainter>
-#include <figure.h>
 #include <cmath>
+
+#include <QPainter>
+
+#include <figure.h>
 
 class Triangle : public Figure
 {

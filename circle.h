@@ -1,8 +1,10 @@
 #ifndef CIRCLE_H
 #define CIRCLE_H
 
-#include <QPainter>
 #include <cmath>
+
+#include <QPainter>
+
 #include <figure.h>
 
 class Circle : public Figure

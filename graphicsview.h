@@ -1,11 +1,12 @@
 #ifndef GRAPHICSSCENE_H
 #define GRAPHICSSCENE_H
 
+#include <functional>
+
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QDebug>
 #include <QVector>
-#include <functional>
 
 class GraphicsView : public QGraphicsView
 {

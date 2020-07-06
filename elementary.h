@@ -2,7 +2,6 @@
 #define ELEMENTARY_H
 
 #include <QGraphicsItem>
-#include <QDebug>
 
 enum class ElementaryFigures {
     Circle = 0,

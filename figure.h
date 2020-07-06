@@ -1,6 +1,8 @@
 #ifndef FIGURE_H
 #define FIGURE_H
 
+#include <exception>
+
 #include <elementary.h>
 
 class Figure : public Elementary

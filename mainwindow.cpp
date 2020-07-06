@@ -1,12 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <triangle.h>
-#include <QButtonGroup>
-#include <QColorDialog>
-#include <line.h>
-#include <QGraphicsItemGroup>
-#include <QGraphicsSceneMouseEvent>
-#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -222,11 +215,12 @@ void MainWindow::on_lineButton_pressed()
 
 void MainWindow::on_saveButton_pressed()
 {
-    QFileDialog::getOpenFileName(this, tr("Open Image"), "/home/jana", tr("Image Files (*.png *.jpg *.bmp)"));
-    manager->Pack("file");
+    QString path = QFileDialog::getSaveFileName(this, tr("Save scene"), tr("scene.sc"));
+    if (path.size()) manager->Pack(path);
 }
 
 void MainWindow::on_loadButton_pressed()
 {
-    manager->Unpack("file");
+    QString path = QFileDialog::getOpenFileName(this, tr("Open scene"));
+    if (path.size()) manager->Unpack(path);
 }

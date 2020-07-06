@@ -5,13 +5,19 @@
 #include <QGraphicsScene>
 #include <QPushButton>
 #include <QTimer>
-#include <QDebug>
 #include <QPainter>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QButtonGroup>
+#include <QColorDialog>
+#include <QGraphicsItemGroup>
+#include <QGraphicsSceneMouseEvent>
+#include <QFileDialog>
 
-#include <circle.h>
 #include <elementary.h>
+#include <triangle.h>
+#include <line.h>
+#include <circle.h>
 #include <graphicsitemmanager.h>
 
 QT_BEGIN_NAMESPACE

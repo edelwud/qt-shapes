@@ -2,7 +2,6 @@
 #include <circle.h>
 #include <triangle.h>
 #include <rectangle.h>
-#include <exception>
 
 void Figure::setColour(QColor color) {
     colour = color;

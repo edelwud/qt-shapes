@@ -2,6 +2,7 @@
 #define RECTANGLE_H
 
 #include <QPainter>
+
 #include <figure.h>
 
 class Rectangle : public Figure
