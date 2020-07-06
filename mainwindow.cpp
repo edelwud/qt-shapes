@@ -6,6 +6,7 @@
 #include <line.h>
 #include <QGraphicsItemGroup>
 #include <QGraphicsSceneMouseEvent>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -111,6 +112,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     figuresGroup = new QGraphicsItemGroup();
     linesGroup = new QGraphicsItemGroup();
+    manager = new GraphicsItemManager(figuresGroup, linesGroup);
 
     figuresGroup->setHandlesChildEvents(false);
     linesGroup->setHandlesChildEvents(false);
@@ -182,6 +184,7 @@ void MainWindow::setIconsInitialized() {
     setButtonIcon(ui->lineButton, ":/icons/line");
     setButtonIcon(ui->handButton, ":/icons/hand");
     setButtonIcon(ui->colourButton, ":/icons/colour");
+    setButtonIcon(ui->loadButton, ":/icons/load");
     setButtonIcon(ui->saveButton, ":/icons/save");
 }
 
@@ -215,4 +218,15 @@ void MainWindow::on_strippedBox_stateChanged(int status)
 void MainWindow::on_lineButton_pressed()
 {
     handleSelectedFigure();
+}
+
+void MainWindow::on_saveButton_pressed()
+{
+    QFileDialog::getOpenFileName(this, tr("Open Image"), "/home/jana", tr("Image Files (*.png *.jpg *.bmp)"));
+    manager->Pack("file");
+}
+
+void MainWindow::on_loadButton_pressed()
+{
+    manager->Unpack("file");
 }

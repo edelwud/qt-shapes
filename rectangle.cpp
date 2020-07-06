@@ -5,6 +5,14 @@ Rectangle::Rectangle(qreal a, qreal b) : a(a), b(b)
 
 }
 
+ElementaryFigures Rectangle::getElement() {
+    return ElementaryFigures::Rectangle;
+}
+
+QRectF Rectangle::getArea() {
+    return area;
+}
+
 QPointF Rectangle::getCore() {
     return QPointF(x() + a/2, y() + b/2);
 }
@@ -16,6 +24,7 @@ QRectF Rectangle::boundingRect() const {
 void Rectangle::setSize(QPoint difference) {
     a = difference.x() - 5;
     b = difference.y() - 5;
+    area.setCoords(0, 0, difference.x(), difference.y());
 }
 
 void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {

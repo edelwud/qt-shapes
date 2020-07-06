@@ -12,6 +12,7 @@
 
 #include <circle.h>
 #include <elementary.h>
+#include <graphicsitemmanager.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -44,9 +45,14 @@ private slots:
 
     void on_lineButton_pressed();
 
+    void on_saveButton_pressed();
+
+    void on_loadButton_pressed();
+
 private:
     std::vector<Figure*> selectedFigures;
 
+    GraphicsItemManager* manager;
     QGraphicsItemGroup* figuresGroup;
     QGraphicsItemGroup* linesGroup;
 

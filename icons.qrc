@@ -7,5 +7,7 @@
         <file>hand.png</file>
         <file>line.png</file>
         <file>save.png</file>
+        <file>load.png</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

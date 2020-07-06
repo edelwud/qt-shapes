@@ -10,6 +10,8 @@ class Triangle : public Figure
 public:
     Triangle(qreal side, qreal base);
 
+    ElementaryFigures getElement() override;
+    QRectF getArea() override;
     QPointF getCore() override;
     void setSize(QPoint difference) override;
     QRectF boundingRect() const override;

@@ -69,7 +69,6 @@ void GraphicsView::RemoveMouseMoveHandler(int identifier) {
     if (mouseMoveHandlers.size() <= identifier) {
         return;
     }
-    //mouseMoveHandlers.erase(mouseMoveHandlers.begin(), mouseMoveHandlers.end());
     mouseMoveHandlers.remove(identifier);
 }
 

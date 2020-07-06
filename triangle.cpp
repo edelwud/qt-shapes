@@ -5,6 +5,14 @@ Triangle::Triangle(qreal side, qreal base) : side(side), base(base)
     aside = std::sqrt(std::pow(side, 2) - std::pow(base, 2) / 4);
 }
 
+ElementaryFigures Triangle::getElement() {
+    return ElementaryFigures::Triangle;
+}
+
+QRectF Triangle::getArea() {
+    return area;
+}
+
 QPointF Triangle::getCore() {
     const qreal r = std::pow(side, 2) / std::sqrt(std::pow(2 * side, 2) - std::pow(base, 2));
     return QPointF(x() + base/2, y() + r);
@@ -34,4 +42,5 @@ void Triangle::setSize(QPoint difference) {
     base = difference.x() - 5;
     aside = difference.y();
     side = std::sqrt(std::pow(base, 2) + std::pow(aside, 2));
+    area.setCoords(0, 0, difference.x(), difference.y());
 }

@@ -9,6 +9,10 @@ void Figure::setColour(QColor color) {
     update();
 }
 
+QColor Figure::getColour() const {
+    return colour;
+}
+
 Figure* Figure::createFigure(ElementaryFigures type, QColor baseColour) {
     Figure* p;
     switch (type)

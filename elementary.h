@@ -4,14 +4,23 @@
 #include <QGraphicsItem>
 #include <QDebug>
 
+enum class ElementaryFigures {
+    Circle = 0,
+    Rectangle,
+    Triangle,
+    Line
+};
+
 class Elementary : public QObject, public QGraphicsItem
 {
 public:
     Elementary();
 
+    virtual ElementaryFigures getElement() = 0;
     void setPressHandler(std::function<bool(QGraphicsSceneMouseEvent*, bool)> handler);
     void setChosen(bool chosen);
     bool isChosen() const;
+    QRectF boundingRect() const override = 0;
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     bool chosen = false;
