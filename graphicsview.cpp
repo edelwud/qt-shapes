@@ -22,10 +22,6 @@ bool GraphicsView::IsSubset() {
 }
 
 void GraphicsView::mousePressEvent(QMouseEvent *event) {
-    if (IsSubset()) {
-        QGraphicsView::mousePressEvent(event);
-        return;
-    }
     for (std::function<void(QMouseEvent*)> callback : mousePressHandlers) {
         callback(event);
     }
@@ -40,10 +36,6 @@ void GraphicsView::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void GraphicsView::mouseMoveEvent(QMouseEvent *event) {
-    if (IsSubset()) {
-        mouseReleaseEvent(event);
-        return;
-    }
     for (std::function<void(QMouseEvent*)> callback : mouseMoveHandlers) {
         callback(event);
     }

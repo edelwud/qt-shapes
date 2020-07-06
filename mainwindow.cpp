@@ -56,15 +56,15 @@ MainWindow::MainWindow(QWidget *parent)
             }
 
             handManipulatorPressId = ui->graphicsView->AddMousePressHandler([this](QMouseEvent* position) mutable {
-                int x = position->pos().x();
-                int y = position->pos().y();
+                x = position->pos().x();
+                y = position->pos().y();
                 scene->update();
 
-                int handManipulatorMoveId = ui->graphicsView->AddMouseMoveHandler([this, x, y](QMouseEvent* event) mutable {
+                int handManipulatorMoveId = ui->graphicsView->AddMouseMoveHandler([this](QMouseEvent* event) mutable {
                     for (auto item : figuresGroup->childItems()) {
                         Figure* element = dynamic_cast<Figure*>(item);
                         if (element->isChosen()) {
-                            element->setPos(element->pos() + (event->pos() - QPoint(x, y))/100);
+                            element->setPos(element->pos() + (event->pos() - QPoint(x, y)));
                         }
                     }
                     x = event->pos().x();
@@ -79,7 +79,6 @@ MainWindow::MainWindow(QWidget *parent)
         }
         break;
         default: {
-            qDebug() << handManipulatorPressId;
             if (handManipulatorPressId != -1) {
                 ui->graphicsView->RemoveMousePressHandler(handManipulatorPressId);
                 handManipulatorPressId = -1;
@@ -159,6 +158,7 @@ void MainWindow::handleSelectedFigure() {
         Line* line = new Line(selectedFigures[0], selectedFigures[1]);
         line->setDotted(dottedLine);
         linesGroup->addToGroup(line);
+        scene->update();
     }
     selectedFigures.erase(selectedFigures.begin(), selectedFigures.end());
 }

@@ -67,6 +67,8 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
 
+    double x, y;
+
     bool dottedLine = false;
     QColor baseColour = Qt::white;
 };
